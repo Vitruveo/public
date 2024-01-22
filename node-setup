@@ -1,0 +1,41 @@
+sudp apt-get update
+
+sudo apt-get upgrade
+
+wget https://go.dev/dl/go1.19.3.linux-amd64.tar.gz
+
+sudo tar -xvzf go1.19.3.linux-amd64.tar.gz -C /usr/local/
+
+nano ~/.profile (add -> export PATH=$PATH:/usr/local/go/bin)
+
+sudo apt-get install gcc
+
+sudo apt-get install make
+
+git clone https://github.com/Vitruveo/vitruveo-protocol.git
+
+cd vitruveo-protocol/
+
+make geth
+
+cd ..
+
+mkdir rpc
+
+cd rpc
+
+../vitruveo-protocol/build/bin/geth --datadir "./data" account new
+
+nano vitruveo.json (paste -> mainnet-vitruveo.json)
+
+../vitruveo-protocol/build/bin/geth --datadir ./data/ init ./vitruveo.json
+
+nohup ../geth --networkid 1490 --datadir ./data/ --port 30303 --ipcdisable --http --http.corsdomain '*' --http.addr 0.0.0.0 --http.port 8545 --syncmode full --allow-insecure-unlock --unlock 0x203eef5Ec4F0dF6B28b94B34eB0bf72C0B62C52D --password ./password.txt --http.api personal,admin,eth,net,web3,miner,txpool,debug,clique --gcmode=archive --bootnodes enode://8a82fd5e140b75207d814ca4a7570dfd99aa53942730f36547c4d79dd603dc67e7aef118b86a4206e253f18cd8a82927cfe0796f24c179bd9bac2c321492df18@52.9.172.122:30303 --miner.gasprice 4000000000 &
+
+../vitruveo-protocol/build/bin/geth attach http://localhost:8545
+
+------------------------------
+
+//TO MANUALLY ADD PEER
+
+admin.addPeer(âenode://8a82fd5e140b75207d814ca4a7570dfd99aa53942730f36547c4d79dd603dc67e7aef118b86a4206e253f18cd8a82927cfe0796f24c179bd9bac2c321492df18@52.9.172.122:30303â)
